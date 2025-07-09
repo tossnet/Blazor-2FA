@@ -1,0 +1,33 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<br />
+
+@if (!string.IsNullOrEmpty(_qrCodeAsBase64))
+{
+
+	<img src="data:image/png;base64,@_qrCodeAsBase64" width="200" height="200" />
+	<p>Scan this QR code with your Authenticator app</p>
+
+	<br />
+
+	<input class="digit @(_isValid ? "valid" : "invalid")"
+		   type="text" 
+		   placeholder="Code"
+		   max="6"
+		   @bind="_userCode" />
+	<br />
+	<button class="btn btn-primary" @onclick="VerifyCode">Vérifier</button>
+
+	if (_isValid)
+	{
+		<p>Code valid!</p>
+	}
+	else
+	{
+		<p>Invalid code!</p>
+	}
+}
