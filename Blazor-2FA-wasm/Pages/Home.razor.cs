@@ -49,8 +49,21 @@ public partial class Home
 
     private void VerifyCode()
     {
+        if (_secretKey is null)
+            return;
+
+        if (string.IsNullOrWhiteSpace(_userCode))
+            return;
+
         var totp = new Totp(_secretKey);
-        _isValid = totp.VerifyTotp(_userCode, out long timeStepMatched, VerificationWindow.RfcSpecifiedNetworkDelay);
+
+        // a step = 30 seconds
+        VerificationWindow window = VerificationWindow.RfcSpecifiedNetworkDelay; // accepts 1 stpe before ans 1 step after
+        window = new VerificationWindow(2, 2); // accepts 2 step before and 2 after
+
+        _isValid = totp.VerifyTotp(_userCode, out long timeStepMatched, window);
+
+        Console.WriteLine(timeStepMatched);
     }
 
 }
