@@ -59,11 +59,9 @@ public partial class Home
 
         // a step = 30 seconds
         VerificationWindow window = VerificationWindow.RfcSpecifiedNetworkDelay; // accepts 1 stpe before ans 1 step after
-        window = new VerificationWindow(2, 2); // accepts 2 step before and 2 after
+        //OR : window = new VerificationWindow(2, 2); // accepts 2 steps before and 2 after
 
         _isValid = totp.VerifyTotp(_userCode, out long timeStepMatched, window);
-
-        Console.WriteLine(timeStepMatched);
     }
 
 }
